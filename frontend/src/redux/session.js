@@ -11,13 +11,14 @@ const removeUser = () => ({
 })
 
 export const authenticate = () => async (dispatch) => {
-    const response = await fetch('/api/session/');
+    const response = await fetch('/api/session/', {
+        credentials: 'include',
+    });
     if (response.ok) {
         const data = await response.json();
-        if (data.errors) {
-            return;
-        }
-        dispatch(setUser(data.user));
+        if (data.errors) return;
+        const user = data.user || data;
+        dispatch(setUser(user));
     }
 }
 
@@ -27,12 +28,14 @@ export const login = (credentials) => async (dispatch) => {
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify(credentials)
     });
 
     if (response.ok) {
         const data = await response.json();
-        dispatch(setUser(data));
+        const user = data.user || data;
+        dispatch(setUser(user));
     } else if (response.status < 500) {
         const errors = await response.json();
         return errors;
@@ -44,6 +47,7 @@ export const login = (credentials) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
     const response = await fetch('/api/session/', {
         method: 'DELETE',
+        credentials: 'include',
     });
     if (response.ok) {
         dispatch(removeUser());

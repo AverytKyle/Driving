@@ -1,5 +1,3 @@
-import { Routes } from "react-router-dom";
-
 const LOAD_USER_ROUTES = 'routes/LOAD_USER_ROUTES';
 const LOAD_ROUTE = 'routes/LOAD_ROUTE';
 const ADD_ROUTE = 'routes/ADD_ROUTE';
@@ -32,7 +30,9 @@ const deleteRoute = (routeId) => ({
 });
 
 export const get_user_routes = (userId) => async (dispatch) => {
-    const response = await fetch(`/api/routes/user/${userId}/routes/`)
+    const response = await fetch(`/api/routes/user/${userId}/routes/`, {
+        credentials: 'include',
+    });
 
     if (response.ok) {
         const data = await response.json();

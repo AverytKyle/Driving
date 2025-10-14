@@ -1,0 +1,47 @@
+.dashboard-container {
+    padding: 10px;
+}
+
+.dashboard-title {
+    text-align: center;
+}
+
+.dashboard-route {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.dashboard-route h2 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.dashboard-address-list {
+    padding: 10px;
+    border-top: 1px solid #eee;
+}
+
+.dashboard-address-item {
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-address-item p {
+    margin: 2px 0;
+}
+
+.dashboard-address-label {
+    font-weight: bold;
+}
+
+.dashboard-address-formatted {
+    color: #b6b0b0;
+}
+
+.dashboard-address-note {
+    font-style: italic;
+    color: #7c7777;
+}

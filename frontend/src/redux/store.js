@@ -5,6 +5,7 @@ import {
 } from 'redux'; 
 import sessionReducer from './session';
 import routesReducer from './routes';
+import addressesReducer from './addresses';
 
 // Minimal thunk middleware (works like redux-thunk) to allow dispatching functions
 const thunk = ({ dispatch, getState }) => (next) => (action) => {
@@ -17,6 +18,7 @@ const thunk = ({ dispatch, getState }) => (next) => (action) => {
 const rootReducer = combineReducers({
     session: sessionReducer,
     routes: routesReducer,
+    addresses: addressesReducer,
 });
 
 let enhancer;
