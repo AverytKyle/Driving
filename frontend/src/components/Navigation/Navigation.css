@@ -1,0 +1,49 @@
+.nav-bar-container {
+  display: flex;
+  flex-direction: row;
+  background-color: #111d18;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.nav-bar-dashboard {
+  color: white;
+  padding: 5px 20px;
+  font-size: 25px;
+  text-decoration: none;
+}
+
+.nav-bar-search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.nav-bar-search-input-container {
+    display: flex;
+    width: 50%;
+}
+
+.nav-bar-search-input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.nav-bar-routes-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15%;
+}
+
+.nav-bar-routes {
+    color: white;
+    padding: 5px 20px;
+    font-size: 20px;
+    text-decoration: none;
+    cursor: pointer;
+}

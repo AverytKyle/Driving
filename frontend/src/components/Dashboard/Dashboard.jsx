@@ -47,16 +47,14 @@ function Dashboard() {
             </div>
             <div className="dashboard-content">
                 {Object.values(userRoutes).map((route, index) => (
-                    <div key={route.id ?? index} className="dashboard-route">
-                        <div className="dashboard-route-card">
-                            {/* only the name is clickable */}
-                            <h2
-                                onClick={() => handleRouteClick(route.id)}
-                                style={{ cursor: "pointer", display: "inline-block" }}
-                                title="Click to show addresses"
-                            >
-                                {route.name}
-                            </h2>
+                    <div key={index} className="dashboard-route">
+                        <div
+                            onClick={() => handleRouteClick(route.id)}
+                            style={{ cursor: "pointer", display: "inline-block" }}
+                            title="Click to show addresses"
+                            className="dashboard-route-card"
+                        >
+                            <h2 className="dashboard-route-name">{route.name}</h2>
                         </div>
 
                         {/* addresses expanded area */}

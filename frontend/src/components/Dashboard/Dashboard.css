@@ -1,5 +1,8 @@
 .dashboard-container {
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 .dashboard-title {
@@ -11,6 +14,11 @@
     border-radius: 5px;
     padding: 5px;
     margin-bottom: 10px;
+}
+
+.dashboard-route-card {
+    width: 92%;
+    padding: 10px;
 }
 
 .dashboard-route h2 {
