@@ -40,6 +40,10 @@ function Dashboard() {
         }
     };
 
+    const handleAddressClick = (addressId) => {
+        // Placeholder for future address click handling
+    }
+
     return (
         <div className="dashboard-container">
             <div className="dashboard-title">

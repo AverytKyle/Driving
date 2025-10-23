@@ -32,7 +32,7 @@ function Navigation() {
                 <h3
                     className="nav-bar-routes"
                     style={{ cursor: 'pointer' }}
-                    onClick={() => navigate("/dashboard")}
+                    onClick={() => navigate("/my-routes")}
                 >
                     Manage Routes
                 </h3>

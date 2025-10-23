@@ -4,23 +4,23 @@ const EDIT_ADDRESS = 'addresses/EDIT_ADDRESS';
 const DELETE_ADDRESS = 'addresses/DELETE_ADDRESS';
 
 const loadRouteAddresses = (routeId, addresses) => ({
-  type: LOAD_ROUTE_ADDRESSES,
-  payload: { routeId, addresses },
+    type: LOAD_ROUTE_ADDRESSES,
+    payload: { routeId, addresses },
 });
 
 const addAddress = (address) => ({
-  type: ADD_ADDRESS,
-  payload: address,
+    type: ADD_ADDRESS,
+    payload: address,
 });
 
 const editAddress = (address) => ({
-  type: EDIT_ADDRESS,
-  payload: address,
+    type: EDIT_ADDRESS,
+    payload: address,
 });
 
 const deleteAddress = (addressId) => ({
-  type: DELETE_ADDRESS,
-  payload: addressId,
+    type: DELETE_ADDRESS,
+    payload: addressId,
 });
 
 export const get_route_addresses = (routeId) => async (dispatch) => {
@@ -64,6 +64,27 @@ export const update_address = (addressId, address) => async (dispatch) => {
         const data = await response.json();
         dispatch(editAddress(data));
         return data;
+    }
+};
+
+export const reorder_route_addresses = (routeId, orderedRouteAddressIds) => async (dispatch) => {
+    const response = await fetch(`/api/addresses/route/${routeId}/reorder/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ ordered_route_address_ids: orderedRouteAddressIds }),
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        // Reuse the existing action that stores addresses by route
+        dispatch(loadRouteAddresses(routeId, data));
+        return data;
+    } else {
+        const err = await response.json().catch(() => ({ detail: response.statusText }));
+        throw err;
     }
 };
 

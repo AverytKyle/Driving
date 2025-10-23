@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import Layout from './Layout'
 import LandingPage from '../components/LandingPage/LandingPage'
 import Dashboard from '../components/Dashboard/dashboard'
-import Navigation from '../components/Navigation/Navigation'
+import ManageRoutes from '../components/Routes/ManageRoutes'
 
 export const router = createBrowserRouter([
   {
@@ -15,7 +15,11 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard',
         element: <Dashboard />,
-      }
+      },
+      {
+        path: '/my-routes',
+        element: <ManageRoutes />,
+      },
     ],
   }
 ])
