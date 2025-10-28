@@ -2,7 +2,7 @@ import { useState, useEffect, use } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { get_user_routes } from "../../redux/routes";
-import { get_route_addresses, reorder_route_addresses } from "../../redux/addresses";
+import { get_route_addresses, reorder_route_addresses, remove_address } from "../../redux/addresses";
 import "./ManageRoutes.css";
 
 function ManageRoutes() {
@@ -49,6 +49,34 @@ function ManageRoutes() {
         }
     };
 
+    // Need to figure out the stop order dilemma
+    const handleDeleteAddress = async (addressId, routeAddressId) => {
+        // local update
+        const updated = localAddresses.filter((addr) => addr.route_address_id !== routeAddressId);
+        setLocalAddresses(updated);
+        const orderedIds = updated.map((a) => a.route_address_id);
+
+        // dispatch delete action
+        await dispatch(remove_address(addressId));
+
+        try {
+            setIsSavingOrder(true);
+            const data = await dispatch(reorder_route_addresses(expandedRouteId, orderedIds));
+            // thunk returns updated addresses (and also dispatches LOAD into redux).
+            // Use returned data to ensure UI matches server canonical order.
+            if (Array.isArray(data)) {
+                setLocalAddresses(data.slice().sort((a, b) => a.stop_order - b.stop_order));
+            }
+        } catch (err) {
+            console.error("Failed to save new order:", err);
+            // rollback by refetching server state
+            const fresh = await dispatch(get_route_addresses(route.id));
+            setLocalAddresses(fresh ? [...fresh].sort((a, b) => a.stop_order - b.stop_order) : []);
+        } finally {
+            setIsSavingOrder(false);
+        }
+    }
+
     return (
         <div className="manage-routes-container">
             <div className="manage-routes-title">
@@ -56,21 +84,21 @@ function ManageRoutes() {
             </div>
             <div className="manage-routes-content">
                 {Object.values(userRoutes).map((route, index) => (
-                    <div key={index} className="dashboard-route">
+                    <div key={index} className="manage-routes-route-container">
                         <div
                             onClick={() => handleRouteClick(route.id)}
                             style={{ cursor: "pointer", display: "inline-block" }}
                             title="Click to show addresses"
-                            className="dashboard-route-card"
+                            className="manage-routes-card"
                         >
-                            <h2 className="dashboard-route-name">{route.name}</h2>
+                            <h2 className="manage-routes-name">{route.name}</h2>
                         </div>
 
                         {/* addresses expanded area */}
                         {expandedRouteId === route.id && (
-                            <div className="dashboard-address-list">
+                            <div className="manage-routes-address-list">
                                 {loadingRouteId === route.id ? (
-                                    <div className="dashboard-address-loading">Loading addresses...</div>
+                                    <div className="manage-routes-loading">Loading addresses...</div>
                                 ) : localAddresses && localAddresses.length > 0 ? (
                                     localAddresses.map((address, index) => {
                                         // route_address_id is provided by get_addresses_by_route
@@ -78,7 +106,7 @@ function ManageRoutes() {
                                         return (
                                             <div
                                                 key={address.id + "-" + (routeAddressId || index)} // unique key; address.id still used
-                                                className="dashboard-address-item"
+                                                className="manage-routes-address-item"
                                                 draggable={!isSavingOrder}
                                                 onDragStart={(e) => {
                                                     setDragIndex(index);
@@ -134,14 +162,17 @@ function ManageRoutes() {
                                                 onDragEnd={() => setDragIndex(null)}
                                                 style={{ opacity: isSavingOrder ? 0.6 : 1, cursor: isSavingOrder ? "wait" : "grab" }}
                                             >
-                                                <p className="dashboard-address-label">{address.stop_order}. {address.label}</p>
-                                                <p className="dashboard-address-formatted">{address.formatted_address}</p>
-                                                <p className="dashboard-address-note">{address.note}</p>
+                                                <p className="manage-routes-address-label">{address.stop_order}. {address.label}</p>
+                                                <p className="manage-routes-address-formatted">{address.formatted_address}</p>
+                                                <p className="manage-routes-address-note">{address.note}</p>
+                                                <div className="manage-routes-delete">
+                                                    <button onClick={() => handleDeleteAddress(address.id, address.route_address_id)}>Delete</button>
+                                                </div>
                                             </div>
                                         );
                                     })
                                 ) : (
-                                    <div className="dashboard-address-empty">No addresses found for this route.</div>
+                                    <div className="manage-routes-address-empty">No addresses found for this route.</div>
                                 )}
                             </div>
                         )}

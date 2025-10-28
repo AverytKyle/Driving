@@ -3,6 +3,7 @@ import Layout from './Layout'
 import LandingPage from '../components/LandingPage/LandingPage'
 import Dashboard from '../components/Dashboard/dashboard'
 import ManageRoutes from '../components/Routes/ManageRoutes'
+import Map from '../components/Map/MapLoader.jsx'
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
       {
         path: '/my-routes',
         element: <ManageRoutes />,
+      },
+      {
+        path: '/map',
+        element: <Map />,
       },
     ],
   }

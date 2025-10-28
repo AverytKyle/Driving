@@ -19,7 +19,16 @@ function Navigation() {
                     Dashboard
                 </h2>
             </div>
-            <div className="nav-bar-search-container">
+            <div className="nav-bar-map-container">
+                <h3
+                    className="nav-bar-map"
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => navigate("/map")}
+                >
+                    Map
+                </h3>
+            </div>
+            {/* <div className="nav-bar-search-container">
                 <div className="nav-bar-search-input-container">
                     <input
                         type="search"
@@ -27,7 +36,7 @@ function Navigation() {
                         placeholder="Search for addresses..."
                     />
                 </div>
-            </div>
+            </div> */}
             <div className="nav-bar-routes-container">
                 <h3
                     className="nav-bar-routes"

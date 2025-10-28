@@ -12,7 +12,7 @@ function LandingPage() {
   const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
 
-  if (sessionUser) return <Navigate to="/dashboard" replace={true} />;
+  // if (sessionUser) return <Navigate to="/dashboard" replace={true} />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

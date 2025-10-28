@@ -1,0 +1,55 @@
+.manage-routes-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.manage-routes-title {
+    text-align: center;
+}
+
+.manage-routes-route-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.manage-routes-route-card {
+    width: 92%;
+    padding: 10px;
+}
+
+.manage-routes-route h2 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.manage-routes-address-list {
+    padding: 10px;
+    border-top: 1px solid #eee;
+}
+
+.manage-routes-address-item {
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+}
+
+.manage-routes-address-item p {
+    margin: 2px 0;
+}
+
+.manage-routes-address-label {
+    font-weight: bold;
+}
+
+.manage-routes-address-formatted {
+    color: #b6b0b0;
+}
+
+.manage-routes-address-note {
+    font-style: italic;
+    color: #7c7777;
+}

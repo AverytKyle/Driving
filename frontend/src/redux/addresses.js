@@ -131,16 +131,14 @@ const addressesReducer = (state = initialState, action) => {
                     ),
                 },
             };
-        case DELETE_ADDRESS:
-            return {
-                ...state,
-                Addresses: {
-                    ...state.Addresses,
-                    [action.payload.routeId]: state.Addresses[action.payload.routeId].filter(
-                        (address) => address.id !== action.payload.id
-                    ),
-                },
-            };
+        case DELETE_ADDRESS: {
+            const idToRemove = action.payload; // payload is the numeric id
+            const Addresses = Object.keys(state.Addresses).reduce((acc, routeId) => {
+                acc[routeId] = (state.Addresses[routeId] || []).filter(a => a.id !== idToRemove);
+                return acc;
+            }, {});
+            return { ...state, Addresses };
+        }
         default:
             return state;
     }
