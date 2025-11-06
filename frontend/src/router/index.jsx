@@ -3,7 +3,7 @@ import Layout from './Layout'
 import LandingPage from '../components/LandingPage/LandingPage'
 import Dashboard from '../components/Dashboard/dashboard'
 import ManageRoutes from '../components/Routes/ManageRoutes'
-import Map from '../components/Map/MapLoader.jsx'
+import MapPage from '../components/Map/MapWrapper'
 
 export const router = createBrowserRouter([
   {
@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/map',
-        element: <Map />,
+        element: <MapPage />,
       },
     ],
   }

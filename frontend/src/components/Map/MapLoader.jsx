@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import "./Map.css"
 
 function loadGoogleMaps(apiKey) {
   if (typeof window === 'undefined') return Promise.reject(new Error('Window is not available'));
@@ -24,7 +25,7 @@ function loadGoogleMaps(apiKey) {
     }
 
     const s = document.createElement('script');
-    s.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
+    s.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places,marker`;
     s.async = true;
     s.defer = true;
     s.setAttribute('data-google-maps-loader', 'true');
@@ -41,7 +42,7 @@ function loadGoogleMaps(apiKey) {
   return window.__googleMapsPromise;
 }
 
-export default function MapLoader({ center = { lat: 37.7749, lng: -122.4194 }, zoom = 12, options = {}, onMapLoad }) {
+export default function MapLoader({ center, zoom = 12, options = {}, onMapLoad }) {
   const containerRef = useRef(null);
   const mapRef = useRef(null);
   const [error, setError] = useState(null);
@@ -66,6 +67,7 @@ export default function MapLoader({ center = { lat: 37.7749, lng: -122.4194 }, z
             zoom,
             ...options,
           });
+          window.__DRIVING_MAP = mapRef.current; //Makes it so I can add search
           if (typeof onMapLoad === 'function') onMapLoad(mapRef.current, maps);
         } else {
           mapRef.current.setCenter(center);
@@ -82,7 +84,7 @@ export default function MapLoader({ center = { lat: 37.7749, lng: -122.4194 }, z
   }, [center?.lat, center?.lng, zoom, JSON.stringify(options)]);
 
   return (
-    <div style={{ width: '300px', height: '300px' }} ref={containerRef} data-testid="google-map-container">
+    <div className="map-component" ref={containerRef} data-testid="google-map-container">
       {error && <div style={{ color: 'red', padding: 8 }}>Google Maps error: {error}</div>}
     </div>
   );
